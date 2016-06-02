@@ -1,5 +1,4 @@
-﻿
-Function Update-OffCATDefinitions {
+﻿Function Update-OffCATDefinitions {
     
     <#
     .SYNOPSIS
@@ -29,7 +28,8 @@ Function Update-OffCATDefinitions {
     KEYWORDS: PowerShell, OffCAT
    
     VERSIONS HISTORY
-    0.1.0 -  2016-05-30 - The first version published on GitHub
+    - 0.1.0 - 2016-05-30 - The first version published on GitHub
+	- 0.1.1 - 2016-06-03 - The script reformatted
     
     TODO
     - add support for ShouldProcess
@@ -39,7 +39,7 @@ Function Update-OffCATDefinitions {
     - add support for alternative download location
     
     LICENSE
-	Copyright (c) 2016 Wojciech Sciesinski
+    Copyright (c) 2016 Wojciech Sciesinski
     This function is licensed under The MIT License (MIT)
     Full license text: https://opensource.org/licenses/MIT
     
