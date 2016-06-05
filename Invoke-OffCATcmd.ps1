@@ -40,6 +40,7 @@ function Invoke-OffCATcmd {
     
     VERSIONS HISTORY
     - 0.1.0 - 2016-06-02 - The first version published on GitHub, draft
+    - 0.2.0 - 2016-06-05 - The second draft, still doesn't work
     
     TODO
     - add support for detecting Office 2016
@@ -65,6 +66,10 @@ function Invoke-OffCATcmd {
         [ValidateSet("Access", "Excel", "InfoPath", "OneDrive", "OneNote", "Outlook", "PowerPoint", "Publisher", "Visio", "Word")]
         [String]$OfficeProgram,
         
+        [Parameter(Mandatory = $true)]
+        [Alias("AE")]
+        [switch]$AceeptEULA,
+        
         [Parameter(Mandatory = $false)]
         [Alias("dat","ReportPath")]
         [String]$Path,
@@ -86,11 +91,7 @@ function Invoke-OffCATcmd {
         [Parameter(Mandatory = $false)]
         [Alias("ND")]
         [switch]$DownloadUpdates,
-        
-        [Parameter(Mandatory = $false)]
-        [Alias("AE")]
-        [switch]$AceeptEULA,
-        
+                
         [Parameter(Mandatory = $false)]
         [Alias("NoRTS")]
         [switch]$RunOffCABackground
@@ -104,6 +105,14 @@ function Invoke-OffCATcmd {
         If ($OfficeProgram -ne "Outlook" -and $OutlookScanType) {
             
             [String]$MessageText = "The parameter OutlookScanType can be only used with OfficeProgram set to Outlook"
+            
+            Throw $MessageText
+            
+        }
+        
+        If (-not ($AceeptEULA.IsPresent)) {
+            
+            [String]$MessageText = "To invoke OffCATcmd you need accept EULA. Please use the 'AcceptEULA' switch"
             
             Throw $MessageText
             
@@ -126,29 +135,70 @@ function Invoke-OffCATcmd {
         
         [String]$DesktopPath = "{0}\{1}\Desktop" -f $ProfileDrive, $(Get-Content -Path env:HOMEPATH)
         
-        If ($OfficeVersion) {
+        $OffCATcmdParams = New-Object System.Collections.ArrayList
+        
+        $OffCATcmdParams.Add("-cfg $OfficeProgram") | Out-Null
+        
+        If ($InstallType.ToLower -ceq 'msi') {
+            
+            $InstallTypeCasSens = "MSI"
             
         }
-        #Try detect installed version
+        Else {
+            
+            $InstallTypeCasSens = "ClickToRun"
+            
+        }
+        
+        
+        If ($OfficeVersion) {
+            
+            switch ($OfficeVersion) {
+            	"2007" {
+                    
+                    $OffCATcmdParams.Add("-gs MajorVersion 12 InstallType $InstallTypeCaseSens") | Out-Null
+                    
+            	}
+                "2010" {
+                    
+                    $OffCATcmdParams.Add("-gs MajorVersion 14 InstallType $InstallTypeCaseSens") | Out-Null
+                    
+            	}
+                "2013" {
+                    
+                    $OffCATcmdParams.Add("-gs MajorVersion 15 InstallType $InstallTypeCaseSens") | Out-Null
+                    
+                }
+                "2016" {
+                    
+                    $OffCATcmdParams.Add("-gs MajorVersion 16  InstallType $InstallTypeCaseSens") | Out-Null
+                    
+                }
+                
+            }
+            
+        }
+        
+        #Try detect installed Office version
         Else {
             
             #Check Office version
             #Check if version 2013 is installed
             if (test-path HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Office15.PROPLUS) {
                 
-                $OVersion = "15"
+                $OffCATcmdParams.Add("-gs MajorVersion 15 InstallType $InstallTypeCaseSens") | Out-Null
                 
             }
             #Check if version 2010 is installed
             elseif (test-path HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Office14.PROPLUS) {
                 
-                $OVersion = "14"
+                $OffCATcmdParams.Add("-gs MajorVersion 14 InstallType $InstallTypeCaseSens") | Out-Null
                 
             }
             #Check if version 2007 is installed
             elseif (test-path HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Office12.PROPLUS) {
                 
-                $OVersion = "12"
+                $OffCATcmdParams.Add("-gs MajorVersion InstallType $InstallTypeCaseSens 12") | Out-Null
                 
             }
             else {
@@ -159,6 +209,12 @@ function Invoke-OffCATcmd {
                 
             }
         }
+        
+        Write-Output -InputObject $OffCATcmdParams
+        
+        
+        
+        #break
         
         
     }
