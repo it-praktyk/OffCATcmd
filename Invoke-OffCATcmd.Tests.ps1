@@ -4,10 +4,12 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
 
 Describe "Invoke-OffCATcmd" {
     
-    It "Using OutlookScanType with other OfficeProgram" {
+    It "Using OutlookScanType with other than Outlook OfficeProgram" {
         
         { Invoke-OffCATcmd -OfficeProgram "Access" -OutlookScanType "Full" } | Should Throw
         
     }
+    
+    
     
 }
