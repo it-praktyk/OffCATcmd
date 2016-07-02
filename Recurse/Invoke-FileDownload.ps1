@@ -1,6 +1,21 @@
-﻿<#	
-	.NOTES
-	.LINK
+﻿    <#
+    .SYNOPSIS
+        Function intended to download file from internet
+    
+    .DESCRIPTION
+        A detailed description of the Invoke-FileDownload function.
+    
+    .PARAMETER Url
+        A description of the Url parameter.
+    
+    .PARAMETER Destination
+        A description of the Destination parameter.
+    
+    .EXAMPLE
+    
+    PS C:\> Invoke-FileDownload -Url $value1 -Destination $value2
+    
+    .LINK
     https://github.com/it-praktyk/OffCAT
     
     .LINK
@@ -21,3 +36,18 @@
     Full license text: https://opensource.org/licenses/MIT  
     
     #>
+#>
+function Invoke-FileDownload
+{
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory = $true)]
+        [uri]$Url,
+        [System.IO.FileInfo]$Destination
+    )
+    
+    #TODO: Place script here
+}
+
+
