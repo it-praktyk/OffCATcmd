@@ -1,1 +1,6 @@
-# Not sure what if anything to put in here.
+	#Dot source all functions 
+
+    Get-ChildItem -Path $PSScriptRoot\Functions\*.ps1 |
+    ForEach-Object {
+        . $_.FullName
+    }
