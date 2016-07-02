@@ -18,7 +18,7 @@
     Download definition ended successufully - code 0 returned.
      
     .LINK
-    https://github.com/it-praktyk/OffCAT
+    https://github.com/it-praktyk/OffCATcmd
     
     .LINK
     https://www.linkedin.com/in/sciesinskiwojciech
@@ -30,6 +30,7 @@
     VERSIONS HISTORY
     - 0.1.0 - 2016-05-30 - The first version published on GitHub
 	- 0.1.1 - 2016-06-03 - The script reformatted
+    - 0.1.2 - 2016-07-02 - The project name changed from OffCAT to OffCATcmd
     
     TODO
     - add support for ShouldProcess

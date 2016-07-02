@@ -27,10 +27,10 @@ function Invoke-OffCATcmd
     .PARAMETER RunOffCABackground
     
     .EXAMPLE
-        		PS C:\> Invoke-OffCATcmd -OfficeProgram 'Value1'
+    PS C:\> Invoke-OffCATcmd -OfficeProgram 'Value1'
       
     .LINK
-    https://github.com/it-praktyk/OffCAT
+    https://github.com/it-praktyk/OffCATcmd
     
     .LINK
     https://www.linkedin.com/in/sciesinskiwojciech
@@ -43,6 +43,7 @@ function Invoke-OffCATcmd
     - 0.1.0 - 2016-06-02 - The first version published on GitHub, draft
     - 0.2.0 - 2016-06-05 - The second draft, still doesn't work
     - 0.3.0 - 2016-07-02 - The third draft, updated validation of available OffCATcmd.exe and .Net
+    - 0.3.1 - 2016-07-02 - The project name changed from OffCAT to OffCATcmd
     
     TODO
     - add support for detecting Office 2016
