@@ -9,3 +9,26 @@ Describe 'Module Manifest Tests' {
     }
 }
 
+Describe "Invoke-OffCATcmd" {
+    
+    It "Using OutlookScanType with other than Outlook OfficeProgram" {
+        
+        { Invoke-OffCATcmd -OfficeProgram "Access" -OutlookScanType "Full" } | Should Throw
+        
+    }
+    
+    
+    
+}
+
+Describe "New-OffCATcmdPackage" {
+
+
+
+}
+
+Describe "Update-OffCATDefinitions" {
+
+
+
+}
