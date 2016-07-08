@@ -11,5 +11,5 @@ test_script:
   
   
 artifacts:
-   - path: Docs
-   - type: 7z
+  - path: Docs
+  - type: 7z
