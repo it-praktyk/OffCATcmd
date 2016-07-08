@@ -4,30 +4,37 @@ function Invoke-OffCATcmd
     
     <#
     .SYNOPSIS
-        The function intended to run OffCATcmd from a command line
+	The function intended to run OffCATcmd from a command line
     
     .DESCRIPTION
-        A detailed description of the Invoke-OffCATcmd function.
+	A detailed description of the Invoke-OffCATcmd function.
     
     .PARAMETER OfficeProgram
-        A description of the OfficeProgram parameter.
+	A description of the OfficeProgram parameter.
     
-    .PARAMETER OfficeVersion
-    
+	.PARAMETER AcceptEULA
+	Select to confirm that you accept the End User License Agreement
+	
     .PARAMETER Path
-    
-    .PARAMETER InstallType
-    
+	Path where scan report need to be stored
+	
     .PARAMETER OutlookScanType
+	Select type of Outlook scan. Prefered is Full. Use Offline only when you can't run Outlook. 
+	
+    .PARAMETER OfficeVersion
+	Microsoft Office version what need to be scanned - e.g. 2010
     
+	.PARAMETER InstallType
+	Intallation type 
+	
     .PARAMETER DownloadUpdates
-    
-    .PARAMETER AcceptEULA
-    
-    .PARAMETER RunOffCABackground
-    
+    Select if scan rules need to be updated from the internet.
+	
+	.PARAMETER OffCATcmdPath 
+	Path to the OffCATcmd.exe file.
+	
     .EXAMPLE
-    PS C:\> Invoke-OffCATcmd -OfficeProgram 'Value1'
+    PS C:\> Invoke-OffCATcmd -OfficeProgram 'Outlook' -AcceptEULA -OutlookScanType Full -OfficeVersion 2013
       
     .LINK
     https://github.com/it-praktyk/OffCATcmd
@@ -44,6 +51,7 @@ function Invoke-OffCATcmd
     - 0.2.0 - 2016-06-05 - The second draft, still doesn't work
     - 0.3.0 - 2016-07-02 - The third draft, updated validation of available OffCATcmd.exe and .Net
     - 0.3.1 - 2016-07-02 - The project name changed from OffCAT to OffCATcmd
+	- 0.3.2 - 2016-07-08 - Help updated, the parameter RunOffCABackground removed
     
     TODO
     - add support for detecting Office 2016
@@ -70,7 +78,7 @@ function Invoke-OffCATcmd
         [String]$OfficeProgram,
         [Parameter(Mandatory = $true)]
         [Alias("AE")]
-        [switch]$AceeptEULA,
+        [switch]$AcceptEULA,
         [Parameter(Mandatory = $false)]
         [Alias("dat", "ReportPath")]
         [String]$Path,
@@ -88,9 +96,6 @@ function Invoke-OffCATcmd
         [Parameter(Mandatory = $false)]
         [Alias("ND")]
         [switch]$DownloadUpdates,
-        [Parameter(Mandatory = $false)]
-        [Alias("NoRTS")]
-        [switch]$RunOffCABackground,
         [Parameter(Mandatory = $false)]
         [String]$OffCATcmdPath
         
