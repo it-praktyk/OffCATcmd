@@ -1,21 +1,23 @@
 ﻿    <#
     .SYNOPSIS
-        Function intended to download file from internet
+	Function intended to download file from internet
     
     .DESCRIPTION
-        Function intended to download file from internet, compatible with PowerShell 2.0.
+	Function intended to download file from internet, compatible with PowerShell 2.0.
     
     .PARAMETER Url
-        A description of the Url parameter.
+	Specifies the Uniform Resource Identifier (URI) of the Internet resource to which the web request is sent.
+	Enter a URI. This parameter supports HTTP, HTTPS, FTP, and FILE values.
     
     .PARAMETER Destination
-        A description of the Destination parameter.
+	Specifies the path to the location where downloaded file need to be saved. If value contains folder name what not exist the structure will be created.
 
     .PARAMETER PassThru
-    
+    Returns an object representing the downloaded file. By default, this cmdlet returns numeric exit codes.
+	
     .EXAMPLE
     
-    PS C:\> Invoke-FileDownload -Url $value1 -Destination $value2
+    PS C:\> Invoke-FileDownload -Url http:\\internetlocaion.pl\file.txt -Destination C:\Downloaded\file2.txt
     
     .LINK
     https://github.com/it-praktyk/OffCATcmd
@@ -30,9 +32,10 @@
     VERSIONS HISTORY
     - 0.1.0 - 2016-07-02 - The first version
     - 0.2.0 - 2016-07-03 - The first working version
+    - 0.2.1 - 2016-07-03 - Doubled conditional check corrected
+	- 0.2.2 - 2016-07-08 - Help updated
 
     TODO
-    - update help
     - implement download with credentials (?)
     
     LICENSE  
@@ -68,7 +71,7 @@ function Invoke-FileDownload
                 If ($($CurrentLocation.Provider).Name -ne 'FileSystem')
                 {
                     
-                    [String]$MessageText = "Download to {0} is not possible. You can use only location supported by FileSystem PSProvider." -f $CurrentLocation.Path
+                    [String]$MessageText = "Download to {0} is not possible. You can use only location supported by the FileSystem PSProvider." -f $CurrentLocation.Path
                     
                     Write-Error -Message $MessageText
                     
@@ -96,14 +99,10 @@ function Invoke-FileDownload
                 }
                 Else
                 {
-                    If (-not (Test-Path -Path $AbsolutePath -PathType Container))
-                    {
-                        
-                        [System.IO.FileInfo]$AbsolutePath = $AbsolutePath
-                        
-                        New-Item -Path $AbsolutePath.DirectoryName -ItemType Directory -Force -ErrorAction Continue
-                        
-                    }
+                    
+                    [System.IO.FileInfo]$AbsolutePath = $AbsolutePath
+                    
+                    New-Item -Path $AbsolutePath.DirectoryName -ItemType Directory -Force -ErrorAction Continue
                     
                     $FileName = $AbsolutePath.Name
                     
@@ -114,7 +113,6 @@ function Invoke-FileDownload
             }
             
             [String]$Output = "{0}\{1}" -f $AbsolutePath, $FileName
-            
             
             [String]$MessageText = "Downloading from {0} , saving to {1} ." -f $Url, $Output
             
