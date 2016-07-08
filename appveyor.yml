@@ -11,6 +11,5 @@ test_script:
   
   
 artifacts:
-   - path: 'Docs\'
-   - name: '*.*'
+   - path: Docs
    - type: 7z
