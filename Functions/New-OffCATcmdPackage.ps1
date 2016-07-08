@@ -1,28 +1,27 @@
-﻿
-<#
+﻿<#
     .SYNOPSIS
-        Function intended to create OffCATcmd - OffCAT portable - package
+	Function intended to create the OffCATcmd - OffCAT portable - package
     
     .DESCRIPTION
-        A detailed description of the New-OffCATcmdPackage function.
-    
+	Function intended to create the OffCATcmd package based on the locally installed OffCAT or downloaded from the internet.
+	    
     .PARAMETER Path
-        A description of the Path parameter.
+	Specifies the path to the location where downloaded file need to be saved. If value contains folder name what not exist the structure will be created.
     
     .PARAMETER SourceInternet
-        A description of the Source parameter.
-
+	Select if the OffCATcmd package need to be created based on the package downloaded from the internet.
 
     .PARAMETER SourceLocal
-
+	Select if OffCATcmd package need to be created based on the locally installed OffCAT
+	
+	.PARAMETER SourceLocalPath
+	The folder where OffCAT is installed locally. By default %AppData\Microsoft\OffCAT\ folder, for current user, will be checked.
+	
+	.PARAMETER Compress
+	Select if created OffCATcmd package need to be compressed
 
     .EXAMPLE
-
-        PS C:\> New-OffCATcmdPackage -Path 'Value1' -Source 'Value2'
-    
-    
-    .NOTES
-        Additional information about the function.
+    PS C:\> New-OffCATcmdPackage -Path C:\OffCATcmd\ -SourceInternet -Compress
     
     .LINK
     https://github.com/it-praktyk/OffCATcmd
@@ -37,6 +36,7 @@
     VERSIONS HISTORY
     - 0.1.0 - 2016-07-02 - The first draft
     - 0.2.0 - 2016-07-02 - The second draft, the project name changed from OffCAT to OffCATcmd
+	- 0.2.1 - 2016-07-08 - Help updated
     
     TODO
     - 
@@ -46,8 +46,7 @@
     This function is licensed under The MIT License (MIT)  
     Full license text: https://opensource.org/licenses/MIT  
     
-    #>
-
+  
 #>
 function New-OffCATcmdPackage
 {
@@ -64,7 +63,7 @@ function New-OffCATcmdPackage
         [switch]$SourceLocal,
         [Parameter(ParameterSetName = 'SourceLocal',
                    Mandatory = $false)]
-        [String]$LocalSourcePath,
+        [String]$SourceLocalPath,
         [Parameter(Mandatory = $false)]
         [switch]$Compress
         
