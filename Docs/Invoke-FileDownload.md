@@ -1,28 +1,26 @@
 ---
 external help file: OffCATcmd-help.xml
-online version: https://github.com/it-praktyk/OffCATcmd
 schema: 2.0.0
+online version: https://github.com/it-praktyk/OffCATcmd
 ---
 
 # Invoke-FileDownload
 ## SYNOPSIS
 Function intended to download file from internet
-
 ## SYNTAX
 
 ### Normal
 ```
-Invoke-FileDownload -Url <Uri> [-Destination <String>]
+Invoke-FileDownload -Url <Uri> [-Destination <String>] [<CommonParameters>]
 ```
 
 ### PassThru
 ```
-Invoke-FileDownload [-PassThru]
+Invoke-FileDownload [-PassThru] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 Function intended to download file from internet, compatible with PowerShell 2.0.
-
 ## EXAMPLES
 
 ### -------------------------- EXAMPLE 1 --------------------------
@@ -81,6 +79,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 ## INPUTS
 
 ## OUTPUTS
@@ -102,7 +102,6 @@ LICENSE
 Copyright (c) 2016 Wojciech Sciesinski  
 This function is licensed under The MIT License (MIT)  
 Full license text: https://opensource.org/licenses/MIT
-
 ## RELATED LINKS
 
 [https://github.com/it-praktyk/OffCATcmd](https://github.com/it-praktyk/OffCATcmd)

@@ -1,24 +1,22 @@
 ---
 external help file: OffCATcmd-help.xml
-online version: https://github.com/it-praktyk/OffCATcmd
 schema: 2.0.0
+online version: https://github.com/it-praktyk/OffCATcmd
 ---
 
 # Update-OffCATDefinitions
 ## SYNOPSIS
 Function intended for download the updates of definitions used Office Configuration Analyzer Tool
-
 ## SYNTAX
 
 ```
-Update-OffCATDefinitions [[-Path] <DirectoryInfo>]
+Update-OffCATDefinitions [[-Path] <DirectoryInfo>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 Office Configuration Analyzer Tool (OffCAT) use xml definition files what are periodicaly updated by Microsoft.
 For full installation of OffCAT updates are downloaded on start of application.
 For version run from a command line updates need to be downloaded separately.
-
 ## EXAMPLES
 
 ### -------------------------- EXAMPLE 1 --------------------------
@@ -29,7 +27,6 @@ Update-OffCATDefinition -Path C:\Users\UserName\AppData\Local\Microsoft\OffCAT\e
 0
 
 Download definition ended successufully - code 0 returned.
-
 ## PARAMETERS
 
 ### -Path
@@ -49,6 +46,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 ## INPUTS
 
 ## OUTPUTS
@@ -73,7 +72,6 @@ LICENSE
 Copyright (c) 2016 Wojciech Sciesinski
 This function is licensed under The MIT License (MIT)
 Full license text: https://opensource.org/licenses/MIT
-
 ## RELATED LINKS
 
 [https://github.com/it-praktyk/OffCATcmd](https://github.com/it-praktyk/OffCATcmd)

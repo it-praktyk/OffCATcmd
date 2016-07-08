@@ -1,28 +1,27 @@
 ---
 external help file: OffCATcmd-help.xml
-online version: https://github.com/it-praktyk/OffCATcmd
 schema: 2.0.0
+online version: https://github.com/it-praktyk/OffCATcmd
 ---
 
 # New-OffCATcmdPackage
 ## SYNOPSIS
 Function intended to create the OffCATcmd - OffCAT portable - package
-
 ## SYNTAX
 
 ### SourceLocal (Default)
 ```
 New-OffCATcmdPackage [-Path <DirectoryInfo>] [-SourceLocal] [-SourceLocalPath <String>] [-Compress]
+ [<CommonParameters>]
 ```
 
 ### SourceInternet
 ```
-New-OffCATcmdPackage [-Path <DirectoryInfo>] [-SourceInternet] [-Compress]
+New-OffCATcmdPackage [-Path <DirectoryInfo>] [-SourceInternet] [-Compress] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 Function intended to create the OffCATcmd package based on the locally installed OffCAT or downloaded from the internet.
-
 ## EXAMPLES
 
 ### -------------------------- EXAMPLE 1 --------------------------
@@ -109,6 +108,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 ## INPUTS
 
 ## OUTPUTS
@@ -129,7 +130,6 @@ LICENSE
 Copyright (c) 2016 Wojciech Sciesinski  
 This function is licensed under The MIT License (MIT)  
 Full license text: https://opensource.org/licenses/MIT
-
 ## RELATED LINKS
 
 [https://github.com/it-praktyk/OffCATcmd](https://github.com/it-praktyk/OffCATcmd)
