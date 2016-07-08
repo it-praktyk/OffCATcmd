@@ -4,6 +4,13 @@ install:
 build: false
 
 test_script:
+  - ps: $PSVersionTable
   - ps: $res = Invoke-Pester -Path ".\Tests" -Tags Help -OutputFormat NUnitXml -OutputFile TestsResults.xml -PassThru
   - ps: (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.xml))
-  - ps: if ($res.FailedCount -gt 0) { throw "$($res.FailedCount) tests failed."}
+  - ps: if ($res.FailedCount -gt 0) { throw "$($res.FailedCount) tests failed."} Else { (Install-Module -Name platyPs -MinimumVersion 0.5.0 -Repository PSGallery -Force) ; Update-MarkdownHelpModule -Path .\Docs\ -LogPath .\Docs\DocsLogs.txt -LogAppend  }
+  
+  
+artifacts:
+   - path: 'Docs\'
+   - name: '*.*'
+   - type: 7z
