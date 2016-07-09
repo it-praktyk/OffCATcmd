@@ -1,19 +1,15 @@
-﻿
-function Invoke-OffCATcmd
-{
-    
-    <#
+﻿<#
     .SYNOPSIS
 	The function intended to run OffCATcmd from a command line
     
     .DESCRIPTION
-	A detailed description of the Invoke-OffCATcmd function.
+	By using the Invoke-OffCATcmd function you can create OffCAT report without installing the OffCAT tool on the computer - by invoking OffCATcmd.exe tool.
     
     .PARAMETER OfficeProgram
-	A description of the OfficeProgram parameter.
+	Select what program what need to be scanned.
     
 	.PARAMETER AcceptEULA
-	Select to confirm that you accept the End User License Agreement
+	Select to confirm that you accept the End User License Agreement.
 	
     .PARAMETER Path
 	Path where scan report need to be stored
@@ -25,7 +21,7 @@ function Invoke-OffCATcmd
 	Microsoft Office version what need to be scanned - e.g. 2010
     
 	.PARAMETER InstallType
-	Intallation type 
+	Intallation type - ussually it is 'MSI' for Office distributed as part of Office 365: 'ClickToRun'.
 	
     .PARAMETER DownloadUpdates
     Select if scan rules need to be updated from the internet.
@@ -35,6 +31,8 @@ function Invoke-OffCATcmd
 	
     .EXAMPLE
     PS C:\> Invoke-OffCATcmd -OfficeProgram 'Outlook' -AcceptEULA -OutlookScanType Full -OfficeVersion 2013
+	
+	Scan Microsoft Outook 2013 in the full mode. Other parameters values will be assigned from default. 
       
     .LINK
     https://github.com/it-praktyk/OffCATcmd
@@ -52,6 +50,7 @@ function Invoke-OffCATcmd
     - 0.3.0 - 2016-07-02 - The third draft, updated validation of available OffCATcmd.exe and .Net
     - 0.3.1 - 2016-07-02 - The project name changed from OffCAT to OffCATcmd
 	- 0.3.2 - 2016-07-08 - Help updated, the parameter RunOffCABackground removed
+	- 0.3.3 - 2016-07-09 - Help updated
     
     TODO
     - add support for detecting Office 2016
@@ -67,7 +66,10 @@ function Invoke-OffCATcmd
     This function is licensed under The MIT License (MIT)
     Full license text: https://opensource.org/licenses/MIT
     
-    #>
+#>
+
+function Invoke-OffCATcmd
+{
     
     [CmdletBinding()]
     param
