@@ -37,6 +37,7 @@
     - 0.1.0 - 2016-07-02 - The first draft
     - 0.2.0 - 2016-07-02 - The second draft, the project name changed from OffCAT to OffCATcmd
 	- 0.2.1 - 2016-07-08 - Help updated
+    - 0.3.0 - 2016-07-12 - The function logic partially implemented
     
     TODO
     - 
@@ -70,25 +71,101 @@ function New-OffCATcmdPackage
         
     )
     
+    #Download url for OffCAT v. 2.2.
+    $OffCATmsiURL = 'https://download.microsoft.com/download/5/F/D/5FD540BF-5AC6-4261-895F-676B38AA8406/OffCAT.msi'
+    
     switch ($PsCmdlet.ParameterSetName)
     {
         'SourceInternet' {
             
-            (New-Object System.Net.WebClient).DownloadFile($file, $output)
-            
-            $Success = $Success -and (Test-Path -Path $Output)
+            $TempDirectory = (Get-Item -Path env:TEMP).Value
             
             
+            [String]$OffCATmsiDestination = "{0}.\OffCAT.msi" -f $TempDirectory
             
-            #Invoke-WebRequest https://download.microsoft.com/download/5/F/D/5FD540BF-5AC6-4261-895F-676B38AA8406/OffCAT.msi -OutFile .\OffCAT.msi
+            $OffCATmsiFile = Invoke-FileDownload -url $OffCATmsiURL -Destination $TempDirectory -PassThru
+            
+            # Check if the file was downloaded successfully
+            If ($OffCATmsiFile)
+            {
+                
+                #http://www.powershellmagazine.com/2012/01/12/find-an-unused-drive-letter/
+                $FreeDriveLetter = $(for ($j = 67; gdr($d = [char]++$j)2>0) { }$d)
+                
+                #Create temporary drive letter - will point to current user temp directory
+                [String]$CreateTempDriveCommand = "{0}\System32\subst.exe {1}: {2}" -f $WindowsDir, $FreeDriveLetter, $TempDirectory
+                
+                Invoke-Expression -Command $CreateTempDriveCommand
+                
+                [String]$DirectoryForExtract = "{0}:\OffCATExtract" -f $FreeDriveLetter
+                
+                $WindowsDir = (Get-Item -Path env:WINDIR).Value
+                
+                [String]$MsiFile = "{0}\System32\msiexec.exe /a {1} targetdir={2} /quiet" -f $WindowsDir, $OffCATmsiFile.FullName, $DirectoryForExtract
+                
+                Invoke-Expression -Command $MsiFile
+                
+                [String]$Source = "{0}\OffCATExtract\LocalAppDataFolder\Microsoft\OffCAT" -f $DirectoryForExtract
+                
+                If (-not (Test-Path $Source -PathType Container))
+                {
+                    
+                    [String]$MessageText = "Extracting of downloaded OffCAT.msi wasn't successfully. Please verfiy if {0} exist." -f $OffCATmsiFile.FullName
+                    
+                    Throw $MessageText
+                    
+                    
+                    
+                }
+                
+            }
+            
+            
             
         }
         'SourceLocal' {
-            #TODO: Place script here
-            break
+            
+            $UserAppDataLocal = (Get-Item env:localappdata).Value
+            
+            [String]$LocalDefaultOffCATPath = "{0}\Microsoft\OffCAT" -f $UserAppDataLocal
+            
+            If ([String]::IsNullOrEmpty($SourceLocalPath))
+            {
+                
+                If (-not (Test-Path -Path $LocalDefaultOffCATPath -PathType Container))
+                {
+                    
+                    [String]$MessageText = "Local installation of OffCAT doesn't exist. Please provide path to foler where OffCAT is installed as a value of the parameter SourceLocalPath."
+                    
+                    Throw $MessageText
+                    
+                }
+                
+                Else
+                {
+                    
+                    $Source = $LocalDefaultOffCATPath
+                    
+                }
+                                
+            }            
+            
         }
+        
+    }
+    
+    
+    
+    If ($PsCmdlet.ParameterSetName -eq 'SourceInternet')
+    {
+        
+        #Remove temporary drive
+        [String]$RemoveTempDriveCommand = "{0}\System32\subst.exe /d {1}:" -f $WindowsDir, $FreeDriveLetter
+        
+        
     }
     
 }
+
 
 
