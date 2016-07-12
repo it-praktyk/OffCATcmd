@@ -34,10 +34,12 @@
     - 0.2.0 - 2016-07-03 - The first working version
     - 0.2.1 - 2016-07-03 - Doubled conditional check corrected
 	- 0.2.2 - 2016-07-08 - Help updated
+    - 0.3.0 - 2016-07-12 - Corrected
 
     TODO
     - implement download with credentials (?)
-    
+    - implement -Force and question if a file exist 
+
     LICENSE  
     Copyright (c) 2016 Wojciech Sciesinski  
     This function is licensed under The MIT License (MIT)  
@@ -50,11 +52,11 @@ function Invoke-FileDownload
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory = $true, ParameterSetName = 'Normal')]
+        [Parameter(Mandatory = $true)]
         [uri]$Url,
-        [Parameter(Mandatory = $false, ParameterSetName = 'Normal')]
+        [Parameter(Mandatory = $false)]
         [String]$Destination,
-        [Parameter(Mandatory = $false, ParameterSetName = 'PassThru')]
+        [Parameter(Mandatory = $false)]
         [switch]$PassThru
     )
     
@@ -146,26 +148,27 @@ function Invoke-FileDownload
     end
     {
         
-        If ($Success -and $PsCmdlet.ParameterSetName -eq 'Normal')
+        If ($Success -and -not( $PassThru.IsPresent))
         {
             
             Return 0
             
         }
-        elseif ($Success -and $PsCmdlet.ParameterSetName -eq 'PassThru')
-        {
-            
-            $DownloadedFile = Get-Item -Path $Output
-            
-            Return = $DownloadedFile
-            
-        }
-        Else
+        elseif (-not $Success -and -not ($PassThru.IsPresent))
         {
             
             Return 1
             
         }
+        elseif ($Success -and $PassThru.IsPresent)
+        {
+            
+            $DownloadedFile = Get-Item -Path $Output
+            
+            Return $DownloadedFile
+            
+        }
+        
         
     }
 }
