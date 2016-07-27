@@ -51,12 +51,10 @@
     - 0.3.1 - 2016-07-02 - The project name changed from OffCAT to OffCATcmd
 	- 0.3.2 - 2016-07-08 - Help updated, the parameter RunOffCABackground removed
 	- 0.3.3 - 2016-07-09 - Help updated
+    - 0.3.4 - 2016-07-26 - Part of code to detect installed Office application moved to the external function, code reformated
     
     TODO
-    - add support for detecting Office 2016
-    - add support for detecting multiply versions of Office
-    - check if detection works with Office ClickToRun
-    - check if x64 are also detected
+    
     - add support for ShouldProcess
     - add support for PassThrou
     
@@ -68,8 +66,7 @@
     
 #>
 
-function Invoke-OffCATcmd
-{
+function Invoke-OffCATcmd {
     
     [CmdletBinding()]
     param
@@ -103,16 +100,14 @@ function Invoke-OffCATcmd
         
     )
     
-    begin
-    {
+    begin {
         
         #Minimal version of OffCATcmd.exe file version
         [version]$MinSupportedOffCATVersion = "2.2.6012.0527"
         
         #Used parameter validation
         
-        If ($OfficeProgram -ne "Outlook" -and $OutlookScanType)
-        {
+        If ($OfficeProgram -ne "Outlook" -and $OutlookScanType) {
             
             [String]$MessageText = "The parameter OutlookScanType can be only used with OfficeProgram set to Outlook"
             
@@ -120,8 +115,7 @@ function Invoke-OffCATcmd
             
         }
         
-        If (-not ($AceeptEULA.IsPresent))
-        {
+        If (-not ($AceeptEULA.IsPresent)) {
             
             [String]$MessageText = "To invoke OffCATcmd you need accept EULA. Please use the 'AcceptEULA' switch"
             
@@ -132,16 +126,14 @@ function Invoke-OffCATcmd
         #Get actual path from the script is running
         $ScriptPath = $PSScriptRoot
         
-        If ([String]::IsNullOrEmpty($OffCATcmdPath))
-        {
+        If ([String]::IsNullOrEmpty($OffCATcmdPath)) {
             
             #Set default path for OffCat files			
             [String]$OffCATcmdFile = "{0}\OffCAT\Offcatcmd.exe" -f $ScriptPath
             
             
         }
-        Else
-        {
+        Else {
             #Set path for OffCat files - based on provided via parameter		
             [String]$OffCATcmdFile = $OffCATcmdPath
             
@@ -149,23 +141,20 @@ function Invoke-OffCATcmd
         
         
         #Check if OffCATcmd.exe exist
-        If (-not (Test-Path -Path $OffCATcmdPath -PathType 'Leaf'))
-        {
+        If (-not (Test-Path -Path $OffCATcmdPath -PathType 'Leaf')) {
             
             [String]$MessageText = "The OffCATcmd.exe file doesn't exist in the location {0}" -f $OffCATcmdFile
             
             Throw $MessageText
             
         }
-        Else
-        {
+        Else {
             
             [version]$OffCATVersion = (Get-Item E:\OffCAT\OffCAT\OffCAT\OffCATcmd.exe).versioninfo.productversion
             
             $OffCATcmdVersionString = $OffCATcmdFile.ToString()
             
-            If ($OffCATcmdFile -lt $MinSupportOffCATVersion)
-            {
+            If ($OffCATcmdFile -lt $MinSupportOffCATVersion) {
                 
                 [String]$MessageText = "Invoke-OffCATcmd support only OffCAT version {0} or newer." -f $MinSupportedOffCATVersion.ToString()
                 
@@ -174,8 +163,7 @@ function Invoke-OffCATcmd
             }
             #Check requrired version of .Net
             #https://support.microsoft.com/en-us/kb/318785
-            elseif ($OffCATcmdFile.major -eq 2 -and $OffCATVersion.Minor -eq 2)
-            {
+            elseif ($OffCATcmdFile.major -eq 2 -and $OffCATVersion.Minor -eq 2) {
                 
                 $RequiredDotNetString = "4.5"
                 
@@ -189,21 +177,18 @@ function Invoke-OffCATcmd
         
         
         #Check installed .Net version - required 4.0 for OffCAT 2.1 and 4.5 for OffCAT 2.2
-        If (-not (Test-Path $RequiredDotNetRegistryKey))
-        {
+        If (-not (Test-Path $RequiredDotNetRegistryKey)) {
             
             $DotNetMissed = $true
             
         }
-        elseif ((Get-Item -Path $RequiredDotNetRegistryKey).GetValue('Release') -lt $RequiredDotNetRelease)
-        {
+        elseif ((Get-Item -Path $RequiredDotNetRegistryKey).GetValue('Release') -lt $RequiredDotNetRelease) {
             
             $DotNetMissed = $true
             
         }
         
-        If ($DotNetMissed)
-        {
+        If ($DotNetMissed) {
             
             [String]$MessageText = "To run the OffCATcmd.exe version {0}, you first must install one of the following versions of the .NET Framework: {1}." -f $OffCATVersion, $RequiredDotNetString
             
@@ -220,8 +205,7 @@ function Invoke-OffCATcmd
         else { $true }
         
         
-        [String]$USerName = Get-Content env:username
-        
+        [String]$USerName = Get-Content env:username        
         
         [String]$ProfileDrive = (Get-Content -Path env:APPDATA).substring(0, 2)
         
@@ -231,25 +215,21 @@ function Invoke-OffCATcmd
         
         $OffCATcmdParams.Add("-cfg $OfficeProgram") | Out-Null
         
-        If ($InstallType.ToLower -ceq 'msi')
-        {
+        If ($InstallType.ToLower -ceq 'msi') {
             
             $InstallTypeCasSens = "MSI"
             
         }
-        Else
-        {
+        Else {
             
             $InstallTypeCasSens = "ClickToRun"
             
         }
         
         
-        If ($OfficeVersion)
-        {
+        If ($OfficeVersion) {
             
-            switch ($OfficeVersion)
-            {
+            switch ($OfficeVersion) {
                 "2007" {
                     
                     $OffCATcmdParams.Add("-gs MajorVersion 12 InstallType $InstallTypeCaseSens") | Out-Null
@@ -275,52 +255,10 @@ function Invoke-OffCATcmd
             
         }
         
-        #Try detect installed Office version
-        Else
-        {
-            
-            #http://windowsitpro.com/microsoft-office/determining-if-office-installation-click-run-or-not
-            #HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{90150000-008C-0000-0000-0000000FF1CE}
-            
-            #Check Office version
-            #Check if version 2013 is installed
-            if (test-path HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Office15.PROPLUS)
-            {
-                
-                $OffCATcmdParams.Add("-gs MajorVersion 15 InstallType $InstallTypeCaseSens") | Out-Null
-                
-            }
-            #Check if version 2010 is installed
-            elseif (test-path HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Office14.PROPLUS)
-            {
-                
-                $OffCATcmdParams.Add("-gs MajorVersion 14 InstallType $InstallTypeCaseSens") | Out-Null
-                
-            }
-            #Check if version 2007 is installed
-            elseif (test-path HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Office12.PROPLUS)
-            {
-                
-                $OffCATcmdParams.Add("-gs MajorVersion InstallType $InstallTypeCaseSens 12") | Out-Null
-                
-            }
-            else
-            {
-                
-                [String]$MessageText = "Computer {0} have no Office 2007\2010\2013\2016 installed" -f $ComputerName
-                
-                Write-Error $MessageText -ErrorAction Stop
-                
-            }
-        }
+        [String]$MessageText = "{0}" -f $OffCATcmdParams
         
-        Write-Output -InputObject $OffCATcmdParams
-        
-        
-        
-        #break
-        
-        
+        Write-Verbose -Message $MessageText
+                
     }
     
     
