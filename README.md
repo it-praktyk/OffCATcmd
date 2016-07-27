@@ -2,7 +2,7 @@
 ## Description
 PowerShell module intended to work with OffCATcmd
 
-More detailed description for available function is available [here](docs\OffCATcmd.md).
+More detailed description for available functions is available [here](/docs/OffCATcmd.md).
 
 ## Notes
 AUTHOR: Wojciech Sciesinski, wojciech[at]sciesinski[dot]net  
