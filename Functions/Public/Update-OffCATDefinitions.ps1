@@ -11,6 +11,10 @@
     .PARAMETER Path
     Folder when the definition files need to be saved. It should be the subfolder 'en' in OffCAT directory. By default files are saved in the current directory.   
    
+    .PARAMETER KeepExistingDefinitions
+    
+    .PARAMETER PassThru
+    
     .EXAMPLE
     Update-OffCATDefinition -Path C:\Users\UserName\AppData\Local\Microsoft\OffCAT\en
     0
@@ -34,7 +38,7 @@
     
     TODO
     - add support for ShouldProcess
-    - add support for PassThrou
+    - add support for PassThru
     - add support for overwriting
     - add support for proxy (?)
     - add support for alternative download location
@@ -51,12 +55,15 @@
     param (
         
         [parameter (Mandatory = $false)]
-        [System.IO.DirectoryInfo]$Path = '.'
-        
+        [System.IO.DirectoryInfo]$Path = '.',
+        [Parameter(Mandatory = $false)]
+        [Switch]$KeepExistingDefinitions,
+        [Parameter(Mandatory = $false, ParameterSetName = 'ReturnExitCode')]
+        [System.Diagnostics.Switch]$ReturnExitCode,
+        [Parameter(Mandatory = $false)]
+        [Switch]$PassThru
     )
     
-    begin {
-        
         if (-not (Test-Path -Path $Path -Type Container)) {
             
             [String]$MessageText = "Provide value for the parameter Path is not a correct folder path."
@@ -67,54 +74,56 @@
         
         #region FilesToDownload
         
-        [array]$FilesToDownload = @()
+        $FilesToDownload = New-Object System.Collections.ArrayList
         
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/offcat.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/access.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/all.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/calcheck.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/common.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/communicator.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/officeupdates.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/access.crashes.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/excel.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/kms.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/infopath.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/excel.crashes.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/lync.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/infopath.crashes.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/onedrive.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/onenote.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/outlook.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/lync.crashes.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/onedrive.crashes.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/onenote.crashes.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/outlook.autodiscover.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/outlook.logging.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/outlook.search.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/outlook.uptodate.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/publisher.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/visio.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/outlook.crashes.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/word.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/offcat.nextversion.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/howto.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/publisher.crashes.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/visio.crashes.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/errorlookup.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/powerpoint.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/word.crashes.config.xml"
-        $FilesToDownload += "http://www.microsoft.com/office/offcat/2.5/en/powerpoint.crashes.config.xml"
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/offcat.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/access.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/all.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/calcheck.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/common.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/communicator.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/officeupdates.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/access.crashes.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/excel.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/kms.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/infopath.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/excel.crashes.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/lync.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/infopath.crashes.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/onedrive.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/onenote.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/outlook.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/lync.crashes.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/onedrive.crashes.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/onenote.crashes.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/outlook.autodiscover.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/outlook.logging.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/outlook.search.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/outlook.uptodate.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/publisher.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/visio.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/outlook.crashes.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/word.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/offcat.nextversion.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/howto.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/publisher.crashes.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/visio.crashes.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/errorlookup.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/powerpoint.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/word.crashes.config.xml") | Out-Null
+        $FilesToDownload.Add("http://www.microsoft.com/office/offcat/2.5/en/powerpoint.crashes.config.xml") | Out-Null
         
         #endregion
-        
-        $Success = $true
-        
-    }
+    
+    $Success = $true
+    
+    $DefinitionFiles = New-Object System.Collections.ArrayList
     
     process {
         
         foreach ($file in $FilesToDownload) {
+            
+            $DefinitionFile = New-Object -TypeName PSCustomObject            
             
             [uri]$Url = $file
             
@@ -122,7 +131,29 @@
             
             [String]$Output = "{0}\{1}" -f $(Resolve-Path $Path), $FileName
             
-            [String]$MessageText = "Downloading from {0} , saving to {1}" -f $file, $Output
+            #Prepopulate properties for DefintionFile object
+            
+            $DefinitionFile | Select-Object -Property filename,VersionBefore,VersionAfter,Updated,KeepedFilePath,NewFilePath
+            
+            $DefinitionFile.FileName = $file
+            
+            If ($KeepExistingDefinitions.IsPresent -and (Test-Path -Path $Output)) {
+                
+                [xml]$DefinitionBefore = Get-Content -Path $Output
+                
+                [Version]$DefinitionBeforeVersion = $DefinitionBefore.ObjectCollector.Configuration.ConfigVersion
+                
+                [String]$FileNameForKeep = "{0}.{1}" -f $Output, $DefinitionBeforeVersion.ToString()
+                
+                $DefinitionFile.VersionBefore = $DefinitionBeforeVersion.ToString()
+                
+                $DefinitionFile.KeepedFilePath = $FileNameForKeep
+                
+                Move-Item -Path $Output -Destination $FileNameForKeep
+                
+            }
+            
+            [String]$MessageText = "Downloading from {0} , saving to {1}." -f $file, $Output
             
             Write-Verbose $MessageText
             
@@ -132,24 +163,59 @@
             
             $Success = $Success -and (Test-Path -Path $Output)
             
+            If ($Success) {
+                
+                [xml]$DefinitionAfter = Get-Content -Path $Output
+                
+                [Version]$DefinitionAfterVersion = $DefinitionAfter.ObjectCollector.Configuration.ConfigVersion
+                
+                $DefinitionFile.VersionAfter = $NewDefinitionsVersion.ToString()
+                
+                If ($DefinitionAfterVersion -gt $DefinitionBeforeVersion) {
+                    
+                    $DefinitionFile.Updated = $true
+                    
+                }
+                Else {
+                    
+                    $DefinitionFile.Updated = $false
+                    
+                }
+                
+                $DefinitionFile.NewFilePath = $Output
+                
+            }
+            
+            $DefinitionFiles.Add($DefinitionFile) | Out-Null
+            
         }
         
     }
     
     end {
         
-        if ($Success) {
+        If ($PassThru.IsPresent) {
             
-            $ExitCode = 0
-            
-        }
-        Else {
-            
-            $ExitCode = 1
+            Return $DefinitionFiles
             
         }
-        
-        Return $ExitCode
+        elseif ($ReturnExitCode.isPresent)  {
+            
+            
+            if ($Success) {
+                
+                $ExitCode = 0
+                
+            }
+            Else {
+                
+                $ExitCode = 1
+                
+            }
+            
+            Return $ExitCode
+        }
         
     }
+    
 }

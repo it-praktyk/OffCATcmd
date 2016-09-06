@@ -123,65 +123,82 @@ function Invoke-OffCATcmd {
             
         }
         
+        
+        #Get machinename and username from environment variables		
+        [String]$ComputerName = Get-Content env:computername
+        
+        [String]$USerName = Get-Content env:username
+        
+        [String]$LocalAppDataFolder = Get-Content -Path env:LOCALAPPDATA
+        
+        [String]$ProfileDrive = ($LocalAppDataFolder).substring(0, 2)
+        
+        [String]$DesktopPath = "{0}\{1}\Desktop" -f $ProfileDrive, $(Get-Content -Path env:HOMEPATH)
+        
         #Get actual path from the script is running
         $ScriptPath = $PSScriptRoot
         
-        If ([String]::IsNullOrEmpty($OffCATcmdPath)) {
+        $OffCATcmdFileInSubfolder = "{0}\OffCAT\Offcatcmd.exe" -f $ScriptPath
+        
+        $OffCATcmdFileInLocaAppdata = "{0}\Microsoft\Offcat\Offcat.cmd.exe" -f $LocalAppDataFolder
+        
+        #Set path for OffCat files - based on provided via parameter		
+        If ($OffCATcmdPath) {
             
-            #Set default path for OffCat files			
-            [String]$OffCATcmdFile = "{0}\OffCAT\Offcatcmd.exe" -f $ScriptPath
-            
-            
-        }
-        Else {
-            #Set path for OffCat files - based on provided via parameter		
             [String]$OffCATcmdFile = $OffCATcmdPath
             
         }
+        elseif (Test-Path -Path $OffCATcmdFileInSubfolder -Type Leaf) {
+            
+            [String]$OffCATcmdFile = $OffCATcmdFileInSubfolder
+            
+        }
         
-        
-        #Check if OffCATcmd.exe exist
-        If (-not (Test-Path -Path $OffCATcmdPath -PathType 'Leaf')) {
+        elseif (Test-Path -Path $OffCATcmdFileInLocaAppdata -Type Leaf) {
+            
+            [String]$OffCATcmdFile = $OffCATcmdFileInLocaAppdata
+            
+        }
+        Else {
             
             [String]$MessageText = "The OffCATcmd.exe file doesn't exist in the location {0}" -f $OffCATcmdFile
             
             Throw $MessageText
             
         }
-        Else {
+        
+        [version]$OffCATVersion = (Get-Item $OffCATcmdFile).versioninfo.productversion
+        
+        $OffCATVersion = $OffCATVersion.ToString()
+        
+        If ($OffCATcmdVersionString -lt $MinSupportedOffCATVersion) {
             
-            [version]$OffCATVersion = (Get-Item E:\OffCAT\OffCAT\OffCAT\OffCATcmd.exe).versioninfo.productversion
+            [String]$MessageText = "Invoke-OffCATcmd support only OffCAT version {0} or newer." -f $MinSupportedOffCATVersion.ToString()
             
-            $OffCATcmdVersionString = $OffCATcmdFile.ToString()
-            
-            If ($OffCATcmdFile -lt $MinSupportOffCATVersion) {
-                
-                [String]$MessageText = "Invoke-OffCATcmd support only OffCAT version {0} or newer." -f $MinSupportedOffCATVersion.ToString()
-                
-                Throw $MessageText
-                
-            }
-            #Check requrired version of .Net
-            #https://support.microsoft.com/en-us/kb/318785
-            elseif ($OffCATcmdFile.major -eq 2 -and $OffCATVersion.Minor -eq 2) {
-                
-                $RequiredDotNetString = "4.5"
-                
-                $RequiredDotNetRelease = 378389
-                
-                $RequiredDotNetRegistryKey = 'HKLM:\software\microsoft\NET Framework Setup\NDP\v4\Full\'
-                
-            }
+            Throw $MessageText
             
         }
         
+        #Check requrired version of .Net
+        #https://support.microsoft.com/en-us/kb/318785
+        elseif ($OffCATcmdFile.major -eq 2 -and $OffCATVersion.Minor -eq 2) {
+            
+            $RequiredDotNetString = "4.5"
+            
+            $RequiredDotNetRelease = 378389
+            
+            $RequiredDotNetRegistryKey = 'HKLM:\software\microsoft\NET Framework Setup\NDP\v4\Full\'
+            
+        }
         
         #Check installed .Net version - required 4.0 for OffCAT 2.1 and 4.5 for OffCAT 2.2
+        #Check if the item in registry exists
         If (-not (Test-Path $RequiredDotNetRegistryKey)) {
             
             $DotNetMissed = $true
             
         }
+        #Check value for existing registry item 
         elseif ((Get-Item -Path $RequiredDotNetRegistryKey).GetValue('Release') -lt $RequiredDotNetRelease) {
             
             $DotNetMissed = $true
@@ -194,22 +211,15 @@ function Invoke-OffCATcmd {
             
             Throw $MessageText
             
-            
         }
         
-        #Get machinename and username from environment variables		
-        [String]$ComputerName = Get-Content env:computername
-        
-        #Check version of installed Windows
-        [Bool]$WindowsIsX64 = if ([System.IntPtr]::Size -eq 4) { $false }
-        else { $true }
-        
-        
-        [String]$USerName = Get-Content env:username        
-        
-        [String]$ProfileDrive = (Get-Content -Path env:APPDATA).substring(0, 2)
-        
-        [String]$DesktopPath = "{0}\{1}\Desktop" -f $ProfileDrive, $(Get-Content -Path env:HOMEPATH)
+        If ($DownloadUpdates.IsPresent) {
+            
+            $DefinitionsPath = "{0}\{1}" -f $OffCATcmdPath, "en"
+            
+            Update-OffCATDefinitions -path $OffCATcmdPath
+            
+        }
         
         $OffCATcmdParams = New-Object System.Collections.ArrayList
         
@@ -217,12 +227,12 @@ function Invoke-OffCATcmd {
         
         If ($InstallType.ToLower -ceq 'msi') {
             
-            $InstallTypeCasSens = "MSI"
+            $InstallTypeCaseSens = "MSI"
             
         }
         Else {
             
-            $InstallTypeCasSens = "ClickToRun"
+            $InstallTypeCaseSens = "ClickToRun"
             
         }
         
@@ -258,9 +268,10 @@ function Invoke-OffCATcmd {
         [String]$MessageText = "{0}" -f $OffCATcmdParams
         
         Write-Verbose -Message $MessageText
-                
+        
     }
     
+    #Invoke-Command -ScriptBlock { }
     
 }
  

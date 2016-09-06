@@ -352,3 +352,731 @@ replaced
 ----Cmdlet Update-OffCATDefinitions updated.----
 
 
+----Cmdlet Invoke-FileDownload is updating.----
+::Invoke-FileDownload: notes has been updated:
+<
+    AUTHOR: Wojciech Sciesinski, wojciech\[at\]sciesinski\[dot\]net
+    KEYWORDS: PowerShell, download
+    VERSIONS HISTORY
+    - 0.1.0 - 2016-07-02 - The first version
+    - 0.2.0 - 2016-07-03 - The first working version
+    - 0.2.1 - 2016-07-03 - Doubled conditional check corrected
+    - 0.2.2 - 2016-07-08 - Help updated
+    TODO
+    - implement download with credentials (?)
+    LICENSE  
+    Copyright (c) 2016 Wojciech Sciesinski  
+    This function is licensed under The MIT License (MIT)  
+    Full license text: https://opensource.org/licenses/MIT
+>
+replaced
+[
+    AUTHOR: Wojciech Sciesinski, wojciech[at]sciesinski[dot]net
+KEYWORDS: PowerShell, download
+
+VERSIONS HISTORY
+- 0.1.0 - 2016-07-02 - The first version
+- 0.2.0 - 2016-07-03 - The first working version
+- 0.2.1 - 2016-07-03 - Doubled conditional check corrected
+- 0.2.2 - 2016-07-08 - Help updated
+
+TODO
+- implement download with credentials (?)
+
+LICENSE  
+Copyright (c) 2016 Wojciech Sciesinski  
+This function is licensed under The MIT License (MIT)  
+Full license text: https://opensource.org/licenses/MIT
+]
+
+::Invoke-FileDownload: parameter Url - description has been updated:
+<
+    Specifies the Uniform Resource Identifier (URI) of the Internet resource to which the web request is sent.
+    Enter a URI.
+    This parameter supports HTTP, HTTPS, FTP, and FILE values.
+
+>
+replaced
+[
+    Specifies the Uniform Resource Identifier (URI) of the Internet resource to which the web request is sent.
+Enter a URI. This parameter supports HTTP, HTTPS, FTP, and FILE values.
+]
+::Invoke-FileDownload: parameter Destination - description has been updated:
+<
+    Specifies the path to the location where downloaded file need to be saved.
+    If value contains folder name what not exist the structure will be created.
+
+>
+replaced
+[
+    Specifies the path to the location where downloaded file need to be saved. If value contains folder name what not exist the structure will be created.
+]
+::Invoke-FileDownload: parameter PassThru - description has been updated:
+<
+    Returns an object representing the downloaded file.
+    By default, this cmdlet returns numeric exit codes.
+
+>
+replaced
+[
+    Returns an object representing the downloaded file. By default, this cmdlet returns numeric exit codes.
+]
+----Cmdlet Invoke-FileDownload updated.----
+
+
+----Cmdlet Invoke-OffCATcmd is updating.----
+::Invoke-OffCATcmd: description has been updated:
+<
+    A detailed description of the Invoke-OffCATcmd function.
+>
+replaced
+[
+    By using the Invoke-OffCATcmd function you can create OffCAT report without installing the OffCAT tool on the computer - by invoking OffCATcmd.exe tool.
+]
+
+::Invoke-OffCATcmd: notes has been updated:
+<
+    AUTHOR: Wojciech Sciesinski, wojciech\[at\]sciesinski\[dot\]net
+    KEYWORDS: PowerShell, OffCAT
+    VERSIONS HISTORY
+    - 0.1.0 - 2016-06-02 - The first version published on GitHub, draft
+    - 0.2.0 - 2016-06-05 - The second draft, still doesn't work
+    - 0.3.0 - 2016-07-02 - The third draft, updated validation of available OffCATcmd.exe and .Net
+    - 0.3.1 - 2016-07-02 - The project name changed from OffCAT to OffCATcmd
+    - 0.3.2 - 2016-07-08 - Help updated, the parameter RunOffCABackground removed
+    TODO
+    - add support for detecting Office 2016
+    - add support for detecting multiply versions of Office
+    - check if detection works with Office ClickToRun
+    - check if x64 are also detected
+    - add support for ShouldProcess
+    - add support for PassThrou
+    LICENSE
+    Copyright (c) 2016 Wojciech Sciesinski
+    This function is licensed under The MIT License (MIT)
+    Full license text: https://opensource.org/licenses/MIT
+>
+replaced
+[
+    AUTHOR: Wojciech Sciesinski, wojciech[at]sciesinski[dot]net
+KEYWORDS: PowerShell, OffCAT
+
+VERSIONS HISTORY
+- 0.1.0 - 2016-06-02 - The first version published on GitHub, draft
+- 0.2.0 - 2016-06-05 - The second draft, still doesn't work
+- 0.3.0 - 2016-07-02 - The third draft, updated validation of available OffCATcmd.exe and .Net
+- 0.3.1 - 2016-07-02 - The project name changed from OffCAT to OffCATcmd
+- 0.3.2 - 2016-07-08 - Help updated, the parameter RunOffCABackground removed
+- 0.3.3 - 2016-07-09 - Help updated
+
+TODO
+- add support for detecting Office 2016
+- add support for detecting multiply versions of Office
+- check if detection works with Office ClickToRun
+- check if x64 are also detected
+- add support for ShouldProcess
+- add support for PassThrou
+
+
+LICENSE
+Copyright (c) 2016 Wojciech Sciesinski
+This function is licensed under The MIT License (MIT)
+Full license text: https://opensource.org/licenses/MIT
+]
+
+::Invoke-OffCATcmd: parameter OfficeProgram - description has been updated:
+<
+    A description of the OfficeProgram parameter.
+
+>
+replaced
+[
+    Select what program what need to be scanned.
+]
+::Invoke-OffCATcmd: parameter AcceptEULA - description has been updated:
+<
+    Select to confirm that you accept the End User License Agreement
+
+>
+replaced
+[
+    Select to confirm that you accept the End User License Agreement.
+]
+::Invoke-OffCATcmd: parameter Path - description has been updated:
+<
+    Path where scan report need to be stored
+
+>
+replaced
+[
+    Path where scan report need to be stored
+]
+::Invoke-OffCATcmd: parameter OfficeVersion - description has been updated:
+<
+    Microsoft Office version what need to be scanned - e.g.
+    2010
+
+>
+replaced
+[
+    Microsoft Office version what need to be scanned - e.g. 2010
+]
+::Invoke-OffCATcmd: parameter InstallType - description has been updated:
+<
+    Intallation type
+
+>
+replaced
+[
+    Intallation type - ussually it is 'MSI' for Office distributed as part of Office 365: 'ClickToRun'.
+]
+::Invoke-OffCATcmd: parameter OutlookScanType - description has been updated:
+<
+    Select type of Outlook scan.
+    Prefered is Full.
+    Use Offline only when you can't run Outlook.
+
+>
+replaced
+[
+    Select type of Outlook scan. Prefered is Full. Use Offline only when you can't run Outlook.
+]
+::Invoke-OffCATcmd: parameter DownloadUpdates - description has been updated:
+<
+    Select if scan rules need to be updated from the internet.
+
+>
+replaced
+[
+    Select if scan rules need to be updated from the internet.
+]
+::Invoke-OffCATcmd: parameter OffCATcmdPath - description has been updated:
+<
+    Path to the OffCATcmd.exe file.
+
+>
+replaced
+[
+    Path to the OffCATcmd.exe file.
+]
+----Cmdlet Invoke-OffCATcmd updated.----
+
+
+----Cmdlet New-OffCATcmdPackage is updating.----
+::New-OffCATcmdPackage: notes has been updated:
+<
+    AUTHOR: Wojciech Sciesinski, wojciech\[at\]sciesinski\[dot\]net
+    KEYWORDS: PowerShell, OffCAT
+    VERSIONS HISTORY
+    - 0.1.0 - 2016-07-02 - The first draft
+    - 0.2.0 - 2016-07-02 - The second draft, the project name changed from OffCAT to OffCATcmd
+    - 0.2.1 - 2016-07-08 - Help updated
+    TODO
+    - 
+    LICENSE  
+    Copyright (c) 2016 Wojciech Sciesinski  
+    This function is licensed under The MIT License (MIT)  
+    Full license text: https://opensource.org/licenses/MIT
+>
+replaced
+[
+    AUTHOR: Wojciech Sciesinski, wojciech[at]sciesinski[dot]net
+KEYWORDS: PowerShell, OffCAT
+
+VERSIONS HISTORY
+- 0.1.0 - 2016-07-02 - The first draft
+- 0.2.0 - 2016-07-02 - The second draft, the project name changed from OffCAT to OffCATcmd
+- 0.2.1 - 2016-07-08 - Help updated
+
+TODO
+- 
+
+LICENSE  
+Copyright (c) 2016 Wojciech Sciesinski  
+This function is licensed under The MIT License (MIT)  
+Full license text: https://opensource.org/licenses/MIT
+]
+
+::New-OffCATcmdPackage: parameter Path - description has been updated:
+<
+    Specifies the path to the location where downloaded file need to be saved.
+    If value contains folder name what not exist the structure will be created.
+
+>
+replaced
+[
+    Specifies the path to the location where downloaded file need to be saved. If value contains folder name what not exist the structure will be created.
+]
+::New-OffCATcmdPackage: parameter SourceInternet - description has been updated:
+<
+    Select if the OffCATcmd package need to be created based on the package downloaded from the internet.
+
+>
+replaced
+[
+    Select if the OffCATcmd package need to be created based on the package downloaded from the internet.
+]
+::New-OffCATcmdPackage: parameter SourceLocal - description has been updated:
+<
+    Select if OffCATcmd package need to be created based on the locally installed OffCAT
+
+>
+replaced
+[
+    Select if OffCATcmd package need to be created based on the locally installed OffCAT
+]
+::New-OffCATcmdPackage: parameter SourceLocalPath - description has been updated:
+<
+    The folder where OffCAT is installed locally.
+    By default %AppData\Microsoft\OffCAT\ folder, for current user, will be checked.
+
+>
+replaced
+[
+    The folder where OffCAT is installed locally. By default %AppData\Microsoft\OffCAT\ folder, for current user, will be checked.
+]
+::New-OffCATcmdPackage: parameter Compress - description has been updated:
+<
+    Select if created OffCATcmd package need to be compressed
+
+>
+replaced
+[
+    Select if created OffCATcmd package need to be compressed
+]
+----Cmdlet New-OffCATcmdPackage updated.----
+
+
+----Cmdlet Update-OffCATDefinitions is updating.----
+::Update-OffCATDefinitions: description has been updated:
+<
+    Office Configuration Analyzer Tool (OffCAT) use xml definition files what are periodicaly updated by Microsoft.
+    For full installation of OffCAT updates are downloaded on start of application.
+    For version run from a command line updates need to be downloaded separately.
+>
+replaced
+[
+    Office Configuration Analyzer Tool (OffCAT) use xml definition files what are periodicaly updated by Microsoft.
+For full installation of OffCAT updates are downloaded on start of application. For version run from a command line updates need to be downloaded separately.
+]
+
+::Update-OffCATDefinitions: notes has been updated:
+<
+    AUTHOR: Wojciech Sciesinski, wojciech\[at\]sciesinski\[dot\]net
+    KEYWORDS: PowerShell, OffCAT
+    VERSIONS HISTORY
+    - 0.1.0 - 2016-05-30 - The first version published on GitHub
+    - 0.1.1 - 2016-06-03 - The script reformatted
+    - 0.1.2 - 2016-07-02 - The project name changed from OffCAT to OffCATcmd
+    TODO
+    - add support for ShouldProcess
+    - add support for PassThrou
+    - add support for overwriting
+    - add support for proxy (?)
+    - add support for alternative download location
+    LICENSE
+    Copyright (c) 2016 Wojciech Sciesinski
+    This function is licensed under The MIT License (MIT)
+    Full license text: https://opensource.org/licenses/MIT
+>
+replaced
+[
+    AUTHOR: Wojciech Sciesinski, wojciech[at]sciesinski[dot]net
+KEYWORDS: PowerShell, OffCAT
+
+VERSIONS HISTORY
+- 0.1.0 - 2016-05-30 - The first version published on GitHub
+- 0.1.1 - 2016-06-03 - The script reformatted
+- 0.1.2 - 2016-07-02 - The project name changed from OffCAT to OffCATcmd
+
+TODO
+- add support for ShouldProcess
+- add support for PassThrou
+- add support for overwriting
+- add support for proxy (?)
+- add support for alternative download location
+
+LICENSE
+Copyright (c) 2016 Wojciech Sciesinski
+This function is licensed under The MIT License (MIT)
+Full license text: https://opensource.org/licenses/MIT
+]
+
+::Update-OffCATDefinitions: parameter Path - description has been updated:
+<
+    Folder when the definition files need to be saved.
+    It should be the subfolder 'en' in OffCAT directory.
+    By default files are saved in the current directory.
+
+>
+replaced
+[
+    Folder when the definition files need to be saved. It should be the subfolder 'en' in OffCAT directory. By default files are saved in the current directory.
+]
+----Cmdlet Update-OffCATDefinitions updated.----
+
+
+----Cmdlet Invoke-FileDownload is updating.----
+::Invoke-FileDownload: notes has been updated:
+<
+    AUTHOR: Wojciech Sciesinski, wojciech\[at\]sciesinski\[dot\]net
+    KEYWORDS: PowerShell, download
+    VERSIONS HISTORY
+    - 0.1.0 - 2016-07-02 - The first version
+    - 0.2.0 - 2016-07-03 - The first working version
+    - 0.2.1 - 2016-07-03 - Doubled conditional check corrected
+    - 0.2.2 - 2016-07-08 - Help updated
+    TODO
+    - implement download with credentials (?)
+    LICENSE  
+    Copyright (c) 2016 Wojciech Sciesinski  
+    This function is licensed under The MIT License (MIT)  
+    Full license text: https://opensource.org/licenses/MIT
+>
+replaced
+[
+    AUTHOR: Wojciech Sciesinski, wojciech[at]sciesinski[dot]net
+KEYWORDS: PowerShell, download
+
+VERSIONS HISTORY
+- 0.1.0 - 2016-07-02 - The first version
+- 0.2.0 - 2016-07-03 - The first working version
+- 0.2.1 - 2016-07-03 - Doubled conditional check corrected
+- 0.2.2 - 2016-07-08 - Help updated
+
+TODO
+- implement download with credentials (?)
+
+LICENSE  
+Copyright (c) 2016 Wojciech Sciesinski  
+This function is licensed under The MIT License (MIT)  
+Full license text: https://opensource.org/licenses/MIT
+]
+
+::Invoke-FileDownload: parameter Url - description has been updated:
+<
+    Specifies the Uniform Resource Identifier (URI) of the Internet resource to which the web request is sent.
+    Enter a URI.
+    This parameter supports HTTP, HTTPS, FTP, and FILE values.
+
+>
+replaced
+[
+    Specifies the Uniform Resource Identifier (URI) of the Internet resource to which the web request is sent.
+Enter a URI. This parameter supports HTTP, HTTPS, FTP, and FILE values.
+]
+::Invoke-FileDownload: parameter Destination - description has been updated:
+<
+    Specifies the path to the location where downloaded file need to be saved.
+    If value contains folder name what not exist the structure will be created.
+
+>
+replaced
+[
+    Specifies the path to the location where downloaded file need to be saved. If value contains folder name what not exist the structure will be created.
+]
+::Invoke-FileDownload: parameter PassThru - description has been updated:
+<
+    Returns an object representing the downloaded file.
+    By default, this cmdlet returns numeric exit codes.
+
+>
+replaced
+[
+    Returns an object representing the downloaded file. By default, this cmdlet returns numeric exit codes.
+]
+----Cmdlet Invoke-FileDownload updated.----
+
+
+----Cmdlet Invoke-OffCATcmd is updating.----
+::Invoke-OffCATcmd: description has been updated:
+<
+    A detailed description of the Invoke-OffCATcmd function.
+>
+replaced
+[
+    By using the Invoke-OffCATcmd function you can create OffCAT report without installing the OffCAT tool on the computer - by invoking OffCATcmd.exe tool.
+]
+
+::Invoke-OffCATcmd: notes has been updated:
+<
+    AUTHOR: Wojciech Sciesinski, wojciech\[at\]sciesinski\[dot\]net
+    KEYWORDS: PowerShell, OffCAT
+    VERSIONS HISTORY
+    - 0.1.0 - 2016-06-02 - The first version published on GitHub, draft
+    - 0.2.0 - 2016-06-05 - The second draft, still doesn't work
+    - 0.3.0 - 2016-07-02 - The third draft, updated validation of available OffCATcmd.exe and .Net
+    - 0.3.1 - 2016-07-02 - The project name changed from OffCAT to OffCATcmd
+    - 0.3.2 - 2016-07-08 - Help updated, the parameter RunOffCABackground removed
+    TODO
+    - add support for detecting Office 2016
+    - add support for detecting multiply versions of Office
+    - check if detection works with Office ClickToRun
+    - check if x64 are also detected
+    - add support for ShouldProcess
+    - add support for PassThrou
+    LICENSE
+    Copyright (c) 2016 Wojciech Sciesinski
+    This function is licensed under The MIT License (MIT)
+    Full license text: https://opensource.org/licenses/MIT
+>
+replaced
+[
+    AUTHOR: Wojciech Sciesinski, wojciech[at]sciesinski[dot]net
+KEYWORDS: PowerShell, OffCAT
+
+VERSIONS HISTORY
+- 0.1.0 - 2016-06-02 - The first version published on GitHub, draft
+- 0.2.0 - 2016-06-05 - The second draft, still doesn't work
+- 0.3.0 - 2016-07-02 - The third draft, updated validation of available OffCATcmd.exe and .Net
+- 0.3.1 - 2016-07-02 - The project name changed from OffCAT to OffCATcmd
+- 0.3.2 - 2016-07-08 - Help updated, the parameter RunOffCABackground removed
+- 0.3.3 - 2016-07-09 - Help updated
+
+TODO
+- add support for detecting Office 2016
+- add support for detecting multiply versions of Office
+- check if detection works with Office ClickToRun
+- check if x64 are also detected
+- add support for ShouldProcess
+- add support for PassThrou
+
+
+LICENSE
+Copyright (c) 2016 Wojciech Sciesinski
+This function is licensed under The MIT License (MIT)
+Full license text: https://opensource.org/licenses/MIT
+]
+
+::Invoke-OffCATcmd: parameter OfficeProgram - description has been updated:
+<
+    A description of the OfficeProgram parameter.
+
+>
+replaced
+[
+    Select what program what need to be scanned.
+]
+::Invoke-OffCATcmd: parameter AcceptEULA - description has been updated:
+<
+    Select to confirm that you accept the End User License Agreement
+
+>
+replaced
+[
+    Select to confirm that you accept the End User License Agreement.
+]
+::Invoke-OffCATcmd: parameter Path - description has been updated:
+<
+    Path where scan report need to be stored
+
+>
+replaced
+[
+    Path where scan report need to be stored
+]
+::Invoke-OffCATcmd: parameter OfficeVersion - description has been updated:
+<
+    Microsoft Office version what need to be scanned - e.g.
+    2010
+
+>
+replaced
+[
+    Microsoft Office version what need to be scanned - e.g. 2010
+]
+::Invoke-OffCATcmd: parameter InstallType - description has been updated:
+<
+    Intallation type
+
+>
+replaced
+[
+    Intallation type - ussually it is 'MSI' for Office distributed as part of Office 365: 'ClickToRun'.
+]
+::Invoke-OffCATcmd: parameter OutlookScanType - description has been updated:
+<
+    Select type of Outlook scan.
+    Prefered is Full.
+    Use Offline only when you can't run Outlook.
+
+>
+replaced
+[
+    Select type of Outlook scan. Prefered is Full. Use Offline only when you can't run Outlook.
+]
+::Invoke-OffCATcmd: parameter DownloadUpdates - description has been updated:
+<
+    Select if scan rules need to be updated from the internet.
+
+>
+replaced
+[
+    Select if scan rules need to be updated from the internet.
+]
+::Invoke-OffCATcmd: parameter OffCATcmdPath - description has been updated:
+<
+    Path to the OffCATcmd.exe file.
+
+>
+replaced
+[
+    Path to the OffCATcmd.exe file.
+]
+----Cmdlet Invoke-OffCATcmd updated.----
+
+
+----Cmdlet New-OffCATcmdPackage is updating.----
+::New-OffCATcmdPackage: notes has been updated:
+<
+    AUTHOR: Wojciech Sciesinski, wojciech\[at\]sciesinski\[dot\]net
+    KEYWORDS: PowerShell, OffCAT
+    VERSIONS HISTORY
+    - 0.1.0 - 2016-07-02 - The first draft
+    - 0.2.0 - 2016-07-02 - The second draft, the project name changed from OffCAT to OffCATcmd
+    - 0.2.1 - 2016-07-08 - Help updated
+    TODO
+    - 
+    LICENSE  
+    Copyright (c) 2016 Wojciech Sciesinski  
+    This function is licensed under The MIT License (MIT)  
+    Full license text: https://opensource.org/licenses/MIT
+>
+replaced
+[
+    AUTHOR: Wojciech Sciesinski, wojciech[at]sciesinski[dot]net
+KEYWORDS: PowerShell, OffCAT
+
+VERSIONS HISTORY
+- 0.1.0 - 2016-07-02 - The first draft
+- 0.2.0 - 2016-07-02 - The second draft, the project name changed from OffCAT to OffCATcmd
+- 0.2.1 - 2016-07-08 - Help updated
+
+TODO
+- 
+
+LICENSE  
+Copyright (c) 2016 Wojciech Sciesinski  
+This function is licensed under The MIT License (MIT)  
+Full license text: https://opensource.org/licenses/MIT
+]
+
+::New-OffCATcmdPackage: parameter Path - description has been updated:
+<
+    Specifies the path to the location where downloaded file need to be saved.
+    If value contains folder name what not exist the structure will be created.
+
+>
+replaced
+[
+    Specifies the path to the location where downloaded file need to be saved. If value contains folder name what not exist the structure will be created.
+]
+::New-OffCATcmdPackage: parameter SourceInternet - description has been updated:
+<
+    Select if the OffCATcmd package need to be created based on the package downloaded from the internet.
+
+>
+replaced
+[
+    Select if the OffCATcmd package need to be created based on the package downloaded from the internet.
+]
+::New-OffCATcmdPackage: parameter SourceLocal - description has been updated:
+<
+    Select if OffCATcmd package need to be created based on the locally installed OffCAT
+
+>
+replaced
+[
+    Select if OffCATcmd package need to be created based on the locally installed OffCAT
+]
+::New-OffCATcmdPackage: parameter SourceLocalPath - description has been updated:
+<
+    The folder where OffCAT is installed locally.
+    By default %AppData\Microsoft\OffCAT\ folder, for current user, will be checked.
+
+>
+replaced
+[
+    The folder where OffCAT is installed locally. By default %AppData\Microsoft\OffCAT\ folder, for current user, will be checked.
+]
+::New-OffCATcmdPackage: parameter Compress - description has been updated:
+<
+    Select if created OffCATcmd package need to be compressed
+
+>
+replaced
+[
+    Select if created OffCATcmd package need to be compressed
+]
+----Cmdlet New-OffCATcmdPackage updated.----
+
+
+----Cmdlet Update-OffCATDefinitions is updating.----
+::Update-OffCATDefinitions: description has been updated:
+<
+    Office Configuration Analyzer Tool (OffCAT) use xml definition files what are periodicaly updated by Microsoft.
+    For full installation of OffCAT updates are downloaded on start of application.
+    For version run from a command line updates need to be downloaded separately.
+>
+replaced
+[
+    Office Configuration Analyzer Tool (OffCAT) use xml definition files what are periodicaly updated by Microsoft.
+For full installation of OffCAT updates are downloaded on start of application. For version run from a command line updates need to be downloaded separately.
+]
+
+::Update-OffCATDefinitions: notes has been updated:
+<
+    AUTHOR: Wojciech Sciesinski, wojciech\[at\]sciesinski\[dot\]net
+    KEYWORDS: PowerShell, OffCAT
+    VERSIONS HISTORY
+    - 0.1.0 - 2016-05-30 - The first version published on GitHub
+    - 0.1.1 - 2016-06-03 - The script reformatted
+    - 0.1.2 - 2016-07-02 - The project name changed from OffCAT to OffCATcmd
+    TODO
+    - add support for ShouldProcess
+    - add support for PassThrou
+    - add support for overwriting
+    - add support for proxy (?)
+    - add support for alternative download location
+    LICENSE
+    Copyright (c) 2016 Wojciech Sciesinski
+    This function is licensed under The MIT License (MIT)
+    Full license text: https://opensource.org/licenses/MIT
+>
+replaced
+[
+    AUTHOR: Wojciech Sciesinski, wojciech[at]sciesinski[dot]net
+KEYWORDS: PowerShell, OffCAT
+
+VERSIONS HISTORY
+- 0.1.0 - 2016-05-30 - The first version published on GitHub
+- 0.1.1 - 2016-06-03 - The script reformatted
+- 0.1.2 - 2016-07-02 - The project name changed from OffCAT to OffCATcmd
+
+TODO
+- add support for ShouldProcess
+- add support for PassThrou
+- add support for overwriting
+- add support for proxy (?)
+- add support for alternative download location
+
+LICENSE
+Copyright (c) 2016 Wojciech Sciesinski
+This function is licensed under The MIT License (MIT)
+Full license text: https://opensource.org/licenses/MIT
+]
+
+::Update-OffCATDefinitions: parameter Path - description has been updated:
+<
+    Folder when the definition files need to be saved.
+    It should be the subfolder 'en' in OffCAT directory.
+    By default files are saved in the current directory.
+
+>
+replaced
+[
+    Folder when the definition files need to be saved. It should be the subfolder 'en' in OffCAT directory. By default files are saved in the current directory.
+]
+----Cmdlet Update-OffCATDefinitions updated.----
+
+
